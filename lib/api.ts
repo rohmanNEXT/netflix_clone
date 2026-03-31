@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Mock API for movies
 export const movieApi = axios.create({
-  baseURL: 'https://api.themoviedb.org/3', // TMDB as a reference, but we'll mock data if needed
+  baseURL: 'https://api.themoviedb.org/3', 
 });
 
 export type Movie = {
