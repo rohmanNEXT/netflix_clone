@@ -1,0 +1,120 @@
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { Play, ArrowLeft, Mail } from 'lucide-react';
+import { motion } from 'motion/react';
+
+export default function ForgotPasswordPage() {
+  const router = useRouter();
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+    },
+    validationSchema: Yup.object({
+      email: Yup.string().email('Email tidak valid').required('Email wajib diisi'),
+    }),
+    onSubmit: (values) => {
+      // Mock forgot password
+      console.log('Reset link sent to:', values.email);
+      setIsSubmitted(true);
+    },
+  });
+
+  return (
+    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6 relative overflow-hidden">
+      {/* Background blobs */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full" />
+
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="w-full max-w-md glass-dark p-10 rounded-[2.5rem] apple-shadow space-y-10 z-10"
+      >
+        <div className="text-center space-y-6 pb-2">
+          <Link href="/" className="inline-flex items-center gap-3 text-4xl font-black tracking-tighter text-white/90 mb-4 transition-transform hover:scale-105">
+            <div className="bg-purple-600 p-2 rounded-xl shadow-lg shadow-purple-600/20">
+              <Play className="fill-white" size={28} />
+            </div>
+            CHILL
+          </Link>
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold text-white/90 tracking-tight">Lupa Kata Sandi</h2>
+            <p className="text-gray-400/70 text-sm leading-relaxed max-w-[280px] mx-auto">
+              {isSubmitted 
+                ? "Kami telah mengirimkan instruksi pemulihan ke email Anda." 
+                : "Masukkan email Anda dan kami akan mengirimkan instruksi untuk mengatur ulang kata sandi Anda."}
+            </p>
+          </div>
+        </div>
+
+        {!isSubmitted ? (
+          <form onSubmit={formik.handleSubmit} className="space-y-10">
+            <div className="space-y-4">
+              <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1 flex items-center gap-2">
+                <Mail size={14} />
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Masukkan email Anda"
+                className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white/90 focus:outline-none focus:ring-2 focus:ring-purple-600/50 transition-all placeholder:text-gray-600"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.email}
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <div className="text-red-400/90 text-xs ml-1">{formik.errors.email}</div>
+              ) : null}
+            </div>
+
+            <button 
+              type="submit"
+              className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl transition-all apple-shadow active:scale-[0.98]"
+            >
+              Kirim Instruksi
+            </button>
+
+            <Link 
+              href="/login" 
+              className="flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+              Kembali ke Masuk
+            </Link>
+          </form>
+        ) : (
+          <div className="space-y-8">
+            <div className="flex justify-center">
+              <div className="w-20 h-20 bg-purple-600/20 rounded-full flex items-center justify-center text-purple-500">
+                <Mail size={40} />
+              </div>
+            </div>
+            
+            <button 
+              onClick={() => setIsSubmitted(false)}
+              className="w-full py-4 glass hover:bg-white/10 text-white font-bold rounded-2xl transition-all"
+            >
+              Kirim Ulang Email
+            </button>
+
+            <Link 
+              href="/login" 
+              className="flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-white transition-colors group"
+            >
+              <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+              Kembali ke Masuk
+            </Link>
+          </div>
+        )}
+      </motion.div>
+    </div>
+  );
+}
