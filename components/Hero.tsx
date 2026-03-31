@@ -147,7 +147,7 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
         <div className="absolute bottom-0 left-0 right-0 h-40 backdrop-blur-[4px] [mask-image:linear-gradient(to_top,black,transparent)]" />
       </div>
       
-      <div className="absolute bottom-32 md:bottom-40 left-6 md:left-12 lg:left-20 xl:left-28 right-6 md:right-auto max-w-2xl space-y-6 md:space-y-8 z-20">
+      <div className="absolute bottom-20 md:bottom-28 left-6 md:left-12 lg:left-20 xl:left-28 right-6 md:right-auto max-w-2xl space-y-6 md:space-y-8 z-20">
         <AnimatePresence mode="wait">
           <motion.div
             key={`content-${currentIndex}`}
@@ -156,26 +156,26 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white/90 mb-4 md:mb-6 leading-tight drop-shadow-2xl">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white/80 mb-4 md:mb-6 leading-[1.1] drop-shadow-2xl">
               {movie.title}
             </h1>
-            <p className="text-sm md:text-lg text-white/90 line-clamp-3 mb-8 md:mb-10 leading-relaxed max-w-xl drop-shadow-md">
+            <p className="text-xs md:text-base text-white/80 line-clamp-3 mb-8 md:mb-10 leading-relaxed max-w-md md:max-w-lg drop-shadow-md font-medium">
               {movie.description}
             </p>
             
-            <div className="flex flex-col items-start gap-4">
+            <div className="flex flex-row items-center gap-3 md:gap-4">
               <button 
                 onClick={() => setIsModalOpen(true)}
-                className="w-48 md:w-56 px-6 md:px-8 py-3 md:py-4 bg-white/10 backdrop-blur-2xl hover:bg-white/20 text-white border border-white/10 rounded-full font-bold flex items-center justify-center gap-2 transition-all text-sm md:text-base active:scale-95"
+                className="px-6 md:px-8 py-2.5 md:py-3 bg-white text-black hover:bg-white/90 rounded-full font-bold flex items-center justify-center gap-2 transition-all text-xs md:text-base shadow-xl active:scale-95"
               >
-                <Play size={20} fill="white" className="md:w-6 md:h-6" />
+                <Play size={18} fill="black" className="md:w-5 md:h-5" />
                 Mulai
               </button>
               <Link 
                 href={`/movie/${movie.id}`}
-                className="w-48 md:w-56 px-6 md:px-8 py-3 md:py-4 bg-white/10 backdrop-blur-2xl hover:bg-white/20 text-white border border-white/10 rounded-full font-bold flex items-center justify-center gap-2 transition-all text-sm md:text-base active:scale-95"
+                className="px-6 md:px-8 py-2.5 md:py-3 bg-white/10 backdrop-blur-3xl hover:bg-white/20 text-white border border-white/20 rounded-full font-bold flex items-center justify-center gap-2 transition-all text-xs md:text-base active:scale-95"
               >
-                <Info size={20} className="md:w-6 md:h-6" />
+                <Info size={18} className="md:w-5 md:h-5" />
                 Selengkapnya
               </Link>
             </div>
@@ -184,7 +184,7 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
       </div>
 
       {/* Dot Indicators - Placed in the empty space at the bottom */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30">
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-3 z-30">
         {movies.map((_, index) => (
           <button
             key={index}
@@ -199,7 +199,7 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
         ))}
       </div>
 
-      <div className="absolute bottom-10 md:bottom-20 right-6 md:right-12 lg:right-20 xl:right-28 z-20">
+      <div className="absolute bottom-8 md:bottom-16 right-6 md:right-12 lg:right-20 xl:right-28 z-20">
         <button 
           onClick={toggleMute}
           className="p-2.5 md:p-3 bg-white/10 backdrop-blur-2xl hover:bg-white/20 border border-white/10 rounded-full text-white transition-all"
