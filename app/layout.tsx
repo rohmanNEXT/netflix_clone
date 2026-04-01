@@ -2,8 +2,8 @@ import type {Metadata} from 'next';
 import './globals.css'; // Global styles
 
 export const metadata: Metadata = {
-  title: 'My Google AI Studio App',
-  description: 'My Google AI Studio App',
+  title: 'Netflix Clone',
+  description: 'A Netflix clone built with Next.js',
 };
 
 const RootLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
