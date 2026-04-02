@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useAuthStore } from '@/store/store';
-import { Play, LogOut, Search, X, Menu, Star } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { getMovies } from '@/lib/api';
+import React, { useState, useRef, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useAuthStore } from "@/store/store";
+import { Play, LogOut, Search, X, Menu, Star } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { getMovies } from "@/lib/api";
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuthStore();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [activeMenu, setActiveMenu] = useState("series");
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -22,8 +23,8 @@ const Navbar: React.FC = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Debounce search
@@ -39,8 +40,8 @@ const Navbar: React.FC = () => {
     const delay = setTimeout(async () => {
       try {
         const allMovies = await getMovies();
-        const filtered = allMovies.filter(movie =>
-          movie.title.toLowerCase().includes(term.toLowerCase())
+        const filtered = allMovies.filter((movie) =>
+          movie.title.toLowerCase().includes(term.toLowerCase()),
         );
         setSearchResults(filtered.slice(0, 12)); // Fetch more to allow scrolling
       } catch (error) {
@@ -53,10 +54,11 @@ const Navbar: React.FC = () => {
     return () => clearTimeout(delay);
   }, [searchTerm]);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = (id: string, menu?: string) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) el.scrollIntoView({ behavior: "smooth" });
     setIsMobileMenuOpen(false);
+    setActiveMenu(menu || id);
   };
 
   return (
@@ -67,29 +69,32 @@ const Navbar: React.FC = () => {
         transition-[background,backdrop-filter,box-shadow] duration-300 ease-out
         ${
           isScrolled
-            ? 'bg-[#020617]/10 backdrop-blur-2xl shadow-lg border-b border-white/10'
-            : 'bg-transparent'
+            ? "bg-[#020617]/10 backdrop-blur-2xl shadow-lg border-b border-white/10"
+            : "bg-transparent"
         }`}
       >
         {/* WRAPPER */}
         <div
-  className={`w-full flex items-center justify-between transition-all duration-300
+          className={`w-full flex items-center justify-between transition-all duration-300
   ${
     isScrolled
-      ? 'px-6 md:px-12 lg:px-20 xl:px-28 py-3'
-      : 'px-6 md:px-12 lg:px-20 xl:px-28 py-6 md:py-8'
+      ? "px-6 md:px-12 lg:px-20 xl:px-28 py-3"
+      : "px-6 md:px-12 lg:px-20 xl:px-28 py-6 md:py-8"
   }`}
->
+        >
           {/* LEFT */}
           <div className="flex items-center gap-4 md:gap-8">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 text-gray-300 hover:text-white"
+              className="md:hidden pr-0 text-gray-300 hover:text-white"
             >
               {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
 
-            <Link href="/" className="flex items-center gap-2 text-xl md:text-2xl font-bold text-white">
+            <Link
+              href="/"
+              className="flex items-center gap-2 text-lg md:text-2xl font-bold text-white"
+            >
               <div className="bg-purple-500/70 p-1 md:p-1.5 rounded-lg">
                 <Play className="fill-white md:w-5 md:h-5" size={16} />
               </div>
@@ -97,14 +102,29 @@ const Navbar: React.FC = () => {
             </Link>
 
             <div className="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
-              <button onClick={() => scrollToSection('series')} className="hover:text-white">Series</button>
-              <button onClick={() => scrollToSection('film')} className="hover:text-white">Film</button>
-              <button onClick={() => scrollToSection('daftar-saya')} className="hover:text-white">Daftar Saya</button>
+              <button
+                onClick={() => scrollToSection("series")}
+                className="hover:text-white"
+              >
+                Series
+              </button>
+              <button
+                onClick={() => scrollToSection("film")}
+                className="hover:text-white"
+              >
+                Film
+              </button>
+              <button
+                onClick={() => scrollToSection("daftar-saya")}
+                className="hover:text-white"
+              >
+                Daftar Saya
+              </button>
             </div>
           </div>
 
           {/* RIGHT */}
-          <div className="flex items-center gap-2 md:gap-4">
+          <div className="flex items-center gap-3 md:gap-4">
             <Link
               href="/subscribe"
               className="hidden sm:flex px-4 py-2 bg-purple-500/80 hover:bg-purple-600 text-white rounded-full text-xs md:text-sm font-bold"
@@ -124,13 +144,21 @@ const Navbar: React.FC = () => {
                 <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-purple-500/80 flex items-center justify-center text-white font-bold text-[10px] md:text-xs">
                   {user.username[0].toUpperCase()}
                 </div>
-                <button onClick={logout} className="text-gray-300 hover:text-white">
+                <button
+                  onClick={logout}
+                  className="text-gray-300 hover:text-white"
+                >
                   <LogOut size={18} className="md:w-5 md:h-5" />
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-2 md:gap-4">
-                <Link href="/login" className="text-xs md:text-sm text-gray-300 hover:text-white">Masuk</Link>
+                <Link
+                  href="/login"
+                  className="text-xs md:text-sm text-gray-300 hover:text-white"
+                >
+                  Masuk
+                </Link>
                 <Link
                   href="/register"
                   className="px-3 md:px-4 py-1.5 md:py-2 bg-white/10 backdrop-blur-2xl hover:bg-white/20 text-white rounded-full text-xs md:text-sm border border-white/10 transition-all"
@@ -143,8 +171,94 @@ const Navbar: React.FC = () => {
         </div>
       </nav>
 
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ x: -40, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -40, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              style={{ willChange: "transform, opacity" }}
+              className="fixed top-0 left-0 h-full w-[260px] z-50 md:hidden
+  bg-[#020617]/90 backdrop-blur-2xl border-r border-white/10
+  shadow-2xl px-6 py-8"
+            >
+              {/* HEADER */}
+              <div className="flex items-center justify-between">
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 text-white font-bold"
+                >
+                  <div className="bg-purple-500/70 p-1 rounded-lg">
+                    <Play size={14} className="fill-white" />
+                  </div>
+                  CHILL
+                </Link>
+                <button
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* MENU */}
+              <div className="flex flex-col gap-6 text-white mt-8">
+                <button
+                  onClick={() => scrollToSection("series", "series")}
+                  className={`text-left text-lg font-semibold ${
+                    activeMenu === "series"
+                      ? "text-purple-400"
+                      : "hover:text-purple-400"
+                  }`}
+                >
+                  Series
+                </button>
+
+                <button
+                  onClick={() => scrollToSection("film", "film")}
+                  className={`text-left text-lg font-semibold ${
+                    activeMenu === "film"
+                      ? "text-purple-400"
+                      : "hover:text-purple-400"
+                  }`}
+                >
+                  Film
+                </button>
+
+                <button
+                  onClick={() => scrollToSection("daftar-saya", "daftar")}
+                  className={`text-left text-lg font-semibold ${
+                    activeMenu === "daftar"
+                      ? "text-purple-400"
+                      : "hover:text-purple-400"
+                  }`}
+                >
+                  Daftar Saya
+                </button>
+
+                <div className="border-t border-white/10 pt-6 mt-2">
+                  <Link
+                    href="/subscribe"
+                    className="block w-full text-center px-4 py-3
+    bg-purple-500/90 hover:bg-purple-600
+    text-white rounded-full text-sm font-semibold
+    transition-all duration-300
+    shadow-lg shadow-purple-500/20 border border-white/10"
+                  >
+                    Langganan
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* SEARCH MODAL */}
-     <AnimatePresence>
+      <AnimatePresence>
         {isSearchOpen && (
           <div className="fixed inset-0 z-[100] flex items-start justify-center pt-24 px-4">
             <motion.div
@@ -154,7 +268,7 @@ const Navbar: React.FC = () => {
               className="absolute inset-0 bg-black/40 backdrop-blur-2xl"
               onClick={() => setIsSearchOpen(false)}
             />
-            
+
             <motion.div
               ref={searchRef}
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -164,9 +278,9 @@ const Navbar: React.FC = () => {
             >
               <div className="flex items-center gap-4">
                 <Search className="text-gray-400" size={24} />
-                <input 
+                <input
                   autoFocus
-                  type="text" 
+                  type="text"
                   value={searchTerm}
                   onChange={(e) => {
                     setSearchTerm(e.target.value);
@@ -183,37 +297,41 @@ const Navbar: React.FC = () => {
                 {isSearching && (
                   <div className="w-5 h-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
                 )}
-                <button 
+                <button
                   onClick={() => setIsSearchOpen(false)}
                   className="p-2 hover:bg-white/10 rounded-full text-gray-400 hover:text-white transition-all"
                 >
                   <X size={20} />
                 </button>
               </div>
-              
+
               <div className="mt-8">
                 {searchResults.length > 0 ? (
                   <div className="space-y-4">
-                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest px-1">Hasil Pencarian</h4>
+                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest px-1">
+                      Hasil Pencarian
+                    </h4>
                     <div className="grid gap-2 max-h-[45vh] md:max-h-[55vh] overflow-y-auto pr-2 custom-scrollbar">
                       {searchResults.map((movie) => (
-                        <Link 
-                          key={movie.id} 
+                        <Link
+                          key={movie.id}
                           href={`/movie/${movie.id}`}
                           onClick={() => setIsSearchOpen(false)}
                           className="flex items-center gap-4 p-2 hover:bg-white/5 rounded-2xl transition-all group"
                         >
                           <div className="relative w-16 h-20 rounded-xl overflow-hidden flex-shrink-0">
-                            <Image 
-                              src={movie.image} 
-                              alt={movie.title} 
-                              fill 
+                            <Image
+                              src={movie.image}
+                              alt={movie.title}
+                              fill
                               className="object-cover"
                               referrerPolicy="no-referrer"
                             />
                           </div>
                           <div className="flex-grow">
-                            <h5 className="text-white font-bold group-hover:text-purple-400 transition-colors">{movie.title}</h5>
+                            <h5 className="text-white font-bold group-hover:text-purple-400 transition-colors">
+                              {movie.title}
+                            </h5>
                             <div className="flex items-center gap-2 text-xs text-gray-400 mt-1">
                               <div className="flex items-center gap-1 text-yellow-400">
                                 <Star size={12} fill="currentColor" />
@@ -222,7 +340,9 @@ const Navbar: React.FC = () => {
                               <span>•</span>
                               <span>{movie.year}</span>
                               <span>•</span>
-                              <span className="text-purple-400">{movie.category}</span>
+                              <span className="text-purple-400">
+                                {movie.category}
+                              </span>
                             </div>
                           </div>
                         </Link>
@@ -231,15 +351,25 @@ const Navbar: React.FC = () => {
                   </div>
                 ) : searchTerm.trim() ? (
                   <div className="text-center py-12">
-                    <p className="text-gray-400">Tidak ada hasil ditemukan untuk &quot;{searchTerm}&quot;</p>
+                    <p className="text-gray-400">
+                      Tidak ada hasil ditemukan untuk &quot;{searchTerm}&quot;
+                    </p>
                   </div>
                 ) : (
                   <div className="space-y-4">
-                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Pencarian Populer</h4>
+                    <h4 className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                      Pencarian Populer
+                    </h4>
                     <div className="flex flex-wrap gap-2">
-                      {['Duty After School', 'Squid Game', 'Stranger Things', 'The Batman', 'Anime'].map((tag) => (
-                        <button 
-                          key={tag} 
+                      {[
+                        "Duty After School",
+                        "Squid Game",
+                        "Stranger Things",
+                        "The Batman",
+                        "Anime",
+                      ].map((tag) => (
+                        <button
+                          key={tag}
                           onClick={() => {
                             setSearchTerm(tag);
                             setIsSearching(true);
