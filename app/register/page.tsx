@@ -66,7 +66,7 @@ export default function RegisterPage() {
         <form onSubmit={formik.handleSubmit} className="space-y-6 md:space-y-7">
           {/* Username */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1">Username</label>
+            <div className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1 mb-1">Username</div>
             <input
               type="text"
               name="username"
@@ -83,7 +83,7 @@ export default function RegisterPage() {
 
           {/* Password */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1">Kata Sandi</label>
+            <div className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1 mb-1">Kata Sandi</div>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
@@ -109,7 +109,7 @@ export default function RegisterPage() {
 
           {/* Confirm Password */}
           <div className="space-y-3">
-            <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1">Konfirmasi Kata Sandi</label>
+            <div className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1 mb-1">Konfirmasi Kata Sandi</div>
             <input
               type={showPassword ? "text" : "password"}
               name="confirmPassword"

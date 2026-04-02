@@ -63,9 +63,9 @@ export default function LoginPage() {
         <form onSubmit={formik.handleSubmit} className="space-y-6">
           {/* Username */}
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">
+            <div className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1 mb-1">
               Username
-            </label>
+            </div>
             <input
               type="text"
               name="username"
@@ -79,9 +79,9 @@ export default function LoginPage() {
 
           {/* Password */}
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1">
+            <div className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1 mb-1">
               Kata Sandi
-            </label>
+            </div>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
