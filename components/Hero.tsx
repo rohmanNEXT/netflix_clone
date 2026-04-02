@@ -31,7 +31,7 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
   const heroRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  // ===== VIDEO CONTROL =====
+  // ===== vidio control =====
   const controlVideo = (action: "play" | "pause" | "mute" | "unmute") => {
     if (!iframeRef.current) return;
 
@@ -52,8 +52,7 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
     );
   };
 
-  // LOAD MUTE
-  // LOAD MUTE
+  // load mute
 useEffect(() => {
   setMounted(true);
   const savedMute = localStorage.getItem("hero-video-muted");
@@ -61,12 +60,12 @@ useEffect(() => {
   if (savedMute !== null) {
     setIsMuted(savedMute === "true");
   } else {
-    setIsMuted(false); // default TIDAK MUTE
+    setIsMuted(false); // default tidak mute 
     localStorage.setItem("hero-video-muted", "false");
   }
 }, []);
 
-  // DETECT HERO 50%
+  // detect hero 50%
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -81,7 +80,7 @@ useEffect(() => {
     };
   }, []);
 
-  // SCROLL > 50% → KEMBALI KE IMAGE
+  // scroll > 50% → kembali ke image
   useEffect(() => {
     if (!isHeroVisible) {
       controlVideo("pause");
@@ -89,7 +88,7 @@ useEffect(() => {
     }
   }, [isHeroVisible]);
 
-  // TOGGLE MUTE
+  // toggle mute
   const toggleMute = () => {
     const newMuted = !isMuted;
     setIsMuted(newMuted);
@@ -111,7 +110,7 @@ useEffect(() => {
     setIsPreviewMode(false);
   }, [movies.length]);
 
-  // AUTO PREVIEW
+  // auto preview
   useEffect(() => {
     if (!isHeroVisible || isDragging) return;
 
