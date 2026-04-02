@@ -20,32 +20,35 @@ export default function ForgotPasswordPage() {
       email: Yup.string().email('Email tidak valid').required('Email wajib diisi'),
     }),
     onSubmit: (values) => {
-      // Mock forgot password
       console.log('Reset link sent to:', values.email);
       setIsSubmitted(true);
     },
   });
 
   return (
-    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#0f172a] flex items-center justify-center p-4 sm:p-6 relative overflow-hidden">
+      
       {/* Background blobs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 blur-[120px] rounded-full" />
+      <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] md:w-[40%] md:h-[40%] bg-purple-600/20 blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] md:w-[40%] md:h-[40%] bg-blue-600/10 blur-[120px] rounded-full" />
 
+      {/* Card */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md glass-dark p-10 rounded-[2.5rem] apple-shadow space-y-10 z-10"
+        className="w-full max-w-md glass-dark p-6 sm:p-8 md:p-10 rounded-3xl md:rounded-[2.5rem] apple-shadow space-y-8 md:space-y-10 z-10"
       >
+        {/* Logo */}
         <div className="text-center space-y-6 pb-2">
-          <Link href="/" className="inline-flex items-center gap-3 text-4xl font-black tracking-tighter text-white/90 mb-4 transition-transform hover:scale-105">
+          <Link href="/" className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black tracking-tighter text-white/90 mb-4 transition-transform hover:scale-105">
             <div className="bg-purple-600 p-2 rounded-xl shadow-lg shadow-purple-600/20">
               <Play className="fill-white" size={28} />
             </div>
             CHILL
           </Link>
+
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-white/90 tracking-tight">Lupa Kata Sandi</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-white/90 tracking-tight">Lupa Kata Sandi</h2>
             <p className="text-gray-400/70 text-sm leading-relaxed max-w-[280px] mx-auto">
               {isSubmitted 
                 ? "Kami telah mengirimkan instruksi pemulihan ke email Anda." 
@@ -55,8 +58,8 @@ export default function ForgotPasswordPage() {
         </div>
 
         {!isSubmitted ? (
-          <form onSubmit={formik.handleSubmit} className="space-y-10">
-            <div className="space-y-4">
+          <form onSubmit={formik.handleSubmit} className="space-y-8 md:space-y-10">
+            <div className="space-y-3 md:space-y-4">
               <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1 flex items-center gap-2">
                 <Mail size={14} />
                 Email
@@ -65,19 +68,19 @@ export default function ForgotPasswordPage() {
                 type="email"
                 name="email"
                 placeholder="Masukkan email Anda"
-                className="w-full px-5 py-4 bg-white/5 border border-white/10 rounded-2xl text-white/90 focus:outline-none focus:ring-2 focus:ring-purple-600/50 transition-all placeholder:text-gray-600"
+                className="w-full px-4 py-3 md:px-5 md:py-4 bg-white/5 border border-white/10 rounded-2xl text-white/90 focus:outline-none focus:ring-2 focus:ring-purple-600/50 transition-all placeholder:text-gray-600"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
               />
-              {formik.touched.email && formik.errors.email ? (
+              {formik.touched.email && formik.errors.email && (
                 <div className="text-red-400/90 text-xs ml-1">{formik.errors.email}</div>
-              ) : null}
+              )}
             </div>
 
             <button 
               type="submit"
-              className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl transition-all apple-shadow active:scale-[0.98]"
+              className="w-full py-3 md:py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl transition-all apple-shadow active:scale-[0.98]"
             >
               Kirim Instruksi
             </button>
@@ -93,14 +96,14 @@ export default function ForgotPasswordPage() {
         ) : (
           <div className="space-y-8">
             <div className="flex justify-center">
-              <div className="w-20 h-20 bg-purple-600/20 rounded-full flex items-center justify-center text-purple-500">
-                <Mail size={40} />
+              <div className="w-16 h-16 md:w-20 md:h-20 bg-purple-600/20 rounded-full flex items-center justify-center text-purple-500">
+                <Mail size={36} />
               </div>
             </div>
             
             <button 
               onClick={() => setIsSubmitted(false)}
-              className="w-full py-4 glass hover:bg-white/10 text-white font-bold rounded-2xl transition-all"
+              className="w-full py-3 md:py-4 glass hover:bg-white/10 text-white font-bold rounded-2xl transition-all"
             >
               Kirim Ulang Email
             </button>
