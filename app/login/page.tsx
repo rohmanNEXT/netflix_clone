@@ -45,24 +45,17 @@ export default function LoginPage() {
         className="w-full max-w-md glass-dark p-6 sm:p-8 md:p-12 rounded-3xl md:rounded-[3rem] apple-shadow space-y-6 md:space-y-8 z-10"
       >
         {/* Logo */}
-        <div className="text-center space-y-4">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black text-white/90 hover:scale-105 transition"
-          >
+        <div className="text-center space-y-4 pb-2">
+          <Link href="/" className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black tracking-tighter text-white/90 mb-2 transition-transform hover:scale-105">
             <div className="bg-purple-600 p-2 rounded-xl shadow-lg shadow-purple-600/20">
               <Play className="fill-white" size={28} />
             </div>
             CHILL
           </Link>
 
-          <div className="space-y-1">
-            <h2 className="text-2xl md:text-3xl font-bold text-white/90">
-              Masuk
-            </h2>
-            <p className="text-gray-400/70 text-sm">
-              Selamat datang kembali di Chill
-            </p>
+          <div className="space-y-2">
+            <h2 className="text-2xl md:text-3xl font-bold text-white/90 tracking-tight">Daftar</h2>
+            <p className="text-gray-400/70 text-sm">Selamat datang kembali di Chill</p>
           </div>
         </div>
 

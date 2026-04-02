@@ -56,7 +56,7 @@ export default function RegisterPage() {
             CHILL
           </Link>
 
-          <div className="space-y-1">
+          <div className="space-y-2">
             <h2 className="text-2xl md:text-3xl font-bold text-white/90 tracking-tight">Daftar</h2>
             <p className="text-gray-400/70 text-sm">Mulai pengalaman menonton terbaikmu</p>
           </div>
