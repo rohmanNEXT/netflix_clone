@@ -58,8 +58,8 @@ export default function ForgotPasswordPage() {
         </div>
 
         {!isSubmitted ? (
-          <form onSubmit={formik.handleSubmit} className="space-y-8 md:space-y-10">
-            <div className="space-y-3 md:space-y-4">
+          <form onSubmit={formik.handleSubmit} className="space-y-6">
+          <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1 flex items-center gap-2">
                 <Mail size={14} />
                 Email

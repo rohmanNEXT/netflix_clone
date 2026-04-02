@@ -46,7 +46,10 @@ export default function LoginPage() {
       >
         {/* Logo */}
         <div className="text-center space-y-4 pb-2">
-          <Link href="/" className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black tracking-tighter text-white/90 mb-2 transition-transform hover:scale-105">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black tracking-tighter text-white/90 mb-4 transition-transform hover:scale-105"
+          >
             <div className="bg-purple-600 p-2 rounded-xl shadow-lg shadow-purple-600/20">
               <Play className="fill-white" size={28} />
             </div>
@@ -54,15 +57,19 @@ export default function LoginPage() {
           </Link>
 
           <div className="space-y-2">
-            <h2 className="text-2xl md:text-3xl font-bold text-white/90 tracking-tight">Daftar</h2>
-            <p className="text-gray-400/70 text-sm">Selamat datang kembali di Chill</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-white/90 tracking-tight">
+              Daftar
+            </h2>
+            <p className="text-gray-400/70 text-sm leading-relaxed mx-auto">
+              Selamat datang kembali di Chill
+            </p>
           </div>
         </div>
 
         {/* Form */}
         <form onSubmit={formik.handleSubmit} className="space-y-6">
           {/* Username */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1 mb-1">
               Username
             </div>
@@ -78,7 +85,7 @@ export default function LoginPage() {
           </div>
 
           {/* Password */}
-          <div className="space-y-2">
+          <div className="space-y-3">
             <div className="text-xs font-bold uppercase tracking-widest text-gray-400 ml-1 mb-1">
               Kata Sandi
             </div>
@@ -120,7 +127,10 @@ export default function LoginPage() {
           {/* Register */}
           <div className="text-center text-xs text-gray-400">
             Belum punya akun?{" "}
-            <Link href="/register" className="text-white font-semibold hover:underline">
+            <Link
+              href="/register"
+              className="text-white font-semibold hover:underline"
+            >
               Daftar
             </Link>
           </div>
