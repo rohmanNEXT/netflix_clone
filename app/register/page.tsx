@@ -45,27 +45,27 @@ export default function RegisterPage() {
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md glass-dark p-6 sm:p-8 md:p-12 rounded-3xl md:rounded-[3rem] apple-shadow space-y-8 md:space-y-10 z-10"
+        className="w-full max-w-md glass-dark p-6 sm:p-8 md:p-12 rounded-3xl md:rounded-[3rem] apple-shadow space-y-6 md:space-y-8 z-10"
       >
         {/* Logo */}
-        <div className="text-center space-y-6 pb-2">
-          <Link href="/" className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black tracking-tighter text-white/90 mb-4 transition-transform hover:scale-105">
+        <div className="text-center space-y-4 pb-2">
+          <Link href="/" className="inline-flex items-center gap-3 text-3xl md:text-4xl font-black tracking-tighter text-white/90 mb-2 transition-transform hover:scale-105">
             <div className="bg-purple-600 p-2 rounded-xl shadow-lg shadow-purple-600/20">
               <Play className="fill-white" size={28} />
             </div>
             CHILL
           </Link>
 
-          <div className="space-y-2">
+          <div className="space-y-1">
             <h2 className="text-2xl md:text-3xl font-bold text-white/90 tracking-tight">Daftar</h2>
             <p className="text-gray-400/70 text-sm">Mulai pengalaman menonton terbaikmu</p>
           </div>
         </div>
 
         {/* Form */}
-        <form onSubmit={formik.handleSubmit} className="space-y-8 md:space-y-10">
+        <form onSubmit={formik.handleSubmit} className="space-y-6 md:space-y-7">
           {/* Username */}
-          <div className="space-y-3 md:space-y-4">
+          <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1">Username</label>
             <input
               type="text"
@@ -82,7 +82,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Password */}
-          <div className="space-y-3 md:space-y-4">
+          <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1">Kata Sandi</label>
             <div className="relative">
               <input
@@ -108,7 +108,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Confirm Password */}
-          <div className="space-y-3 md:space-y-4">
+          <div className="space-y-3">
             <label className="text-xs font-bold uppercase tracking-widest text-gray-400/80 ml-1">Konfirmasi Kata Sandi</label>
             <input
               type={showPassword ? "text" : "password"}
@@ -124,12 +124,6 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* Login Link */}
-          <div className="text-xs text-gray-400 px-1">
-            <span>Sudah punya akun? </span>
-            <Link href="/login" className="text-white font-bold hover:underline">Masuk</Link>
-          </div>
-
           {/* Button */}
           <button 
             type="submit"
@@ -138,13 +132,19 @@ export default function RegisterPage() {
             Daftar
           </button>
 
+          {/* Login Link */}
+          <div className="text-center text-xs text-gray-400">
+            <span>Sudah punya akun? </span>
+            <Link href="/login" className="text-white font-bold hover:underline">Masuk</Link>
+          </div>
+
           {/* Divider */}
-          <div className="relative py-2">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-white/10"></div>
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-[#0f172a] px-2 text-gray-500">Atau</span>
+              <span className="bg-[#0f172a] px-3 text-gray-500">Atau</span>
             </div>
           </div>
 
