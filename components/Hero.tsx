@@ -22,7 +22,7 @@ type HeroProps = {
 const Hero: React.FC<HeroProps> = ({ movies }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -53,11 +53,18 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
   };
 
   // LOAD MUTE
-  useEffect(() => {
-    setMounted(true);
-    const savedMute = localStorage.getItem("hero-video-muted");
-    if (savedMute !== null) setIsMuted(savedMute === "true");
-  }, []);
+  // LOAD MUTE
+useEffect(() => {
+  setMounted(true);
+  const savedMute = localStorage.getItem("hero-video-muted");
+
+  if (savedMute !== null) {
+    setIsMuted(savedMute === "true");
+  } else {
+    setIsMuted(false); // default TIDAK MUTE
+    localStorage.setItem("hero-video-muted", "false");
+  }
+}, []);
 
   // DETECT HERO 50%
   useEffect(() => {
@@ -185,7 +192,7 @@ const Hero: React.FC<HeroProps> = ({ movies }) => {
                     controlVideo(isMuted ? "mute" : "unmute");
                   }, 300);
                 }}
-                src={`https://www.youtube.com/embed/${movie.trailerId}?enablejsapi=1&autoplay=1&mute=1&controls=0&loop=0&rel=0&start=4&end=30&modestbranding=1&iv_load_policy=3&disablekb=1`}
+                src={`https://www.youtube.com/embed/${movie.trailerId}?enablejsapi=1&autoplay=1&mute=0&controls=0&loop=0&rel=0&start=4&end=30&modestbranding=1&iv_load_policy=3&disablekb=1`}
                 title="Preview"
                 frameBorder="0"
                 className="w-full h-full scale-[1.35] translate-y-[4%] origin-center object-cover"
